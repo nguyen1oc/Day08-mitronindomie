@@ -75,7 +75,7 @@ def convert_all():
     print("\n--- News Articles ---")
     convert_news_articles()
 
-    print("\n✓ Done! Output tại:", OUTPUT_DIR)
+    print("\n[OK] Done! Output tại:", OUTPUT_DIR)
 
 
 if __name__ == "__main__":
