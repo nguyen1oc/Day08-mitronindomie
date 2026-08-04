@@ -126,28 +126,29 @@ def rerank_rrf(
     Returns:
         List of top_k candidates sorted by RRF score descending.
     """
-    # TODO: Implement RRF
-    #
-    # rrf_scores = {}  # content -> score
-    # content_map = {}  # content -> full dict
-    #
-    # for ranked_list in ranked_lists:
-    #     for rank, item in enumerate(ranked_list, 1):
-    #         key = item["content"]
-    #         rrf_scores[key] = rrf_scores.get(key, 0) + 1 / (k + rank)
-    #         content_map[key] = item
-    #
-    # # Sort by RRF score
-    # sorted_items = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)
-    #
-    # results = []
-    # for content, score in sorted_items[:top_k]:
-    #     item = content_map[content].copy()
-    #     item["score"] = score
-    #     results.append(item)
-    #
-    # return results
-    raise NotImplementedError("Implement rerank_rrf")
+    if not ranked_lists:
+        return []
+
+    rrf_scores = {}  # content -> score
+    content_map = {}  # content -> full dict
+
+    for ranked_list in ranked_lists:
+        for rank, item in enumerate(ranked_list, 1):
+            key = item["content"]
+            rrf_scores[key] = rrf_scores.get(key, 0.0) + (1.0 / (k + rank))
+            if key not in content_map:
+                content_map[key] = item
+
+    # Sort by RRF score descending
+    sorted_items = sorted(rrf_scores.items(), key=lambda x: x[1], reverse=True)
+
+    results = []
+    for content, score in sorted_items[:top_k]:
+        item = content_map[content].copy()
+        item["score"] = float(score)
+        results.append(item)
+
+    return results
 
 
 # =============================================================================
@@ -156,7 +157,7 @@ def rerank_rrf(
 
 def rerank(
     query: str,
-    candidates: list[dict],
+    candidates: list[dict] | list[list[dict]],
     top_k: int = 5,
     method: str = "rrf",  # "cross_encoder" | "mmr" | "rrf"
 ) -> list[dict]:
@@ -165,21 +166,26 @@ def rerank(
 
     Args:
         query: Câu truy vấn
-        candidates: Danh sách candidates từ retrieval
+        candidates: Danh sách candidates từ retrieval (hoặc list of ranked lists nếu rrf)
         top_k: Số lượng kết quả sau rerank
         method: Phương pháp reranking
 
     Returns:
         List of top_k reranked candidates.
     """
-    if method == "cross_encoder":
+    if method == "rrf":
+        if not candidates:
+            return []
+        # Tự động nhận diện danh sách 1 chiều [dict, ...] hoặc 2 chiều [[dict, ...], ...]
+        if isinstance(candidates[0], dict):
+            ranked_lists = [candidates]
+        else:
+            ranked_lists = candidates
+        return rerank_rrf(ranked_lists, top_k=top_k)
+    elif method == "cross_encoder":
         return rerank_cross_encoder(query, candidates, top_k)
     elif method == "mmr":
-        # Cần query_embedding - embed query trước
         raise NotImplementedError("Call rerank_mmr with query_embedding")
-    elif method == "rrf":
-        # RRF cần nhiều ranked lists - gọi riêng
-        raise NotImplementedError("Call rerank_rrf with ranked_lists")
     else:
         raise ValueError(f"Unknown rerank method: {method}")
 

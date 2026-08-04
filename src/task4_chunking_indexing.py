@@ -158,6 +158,7 @@ def chunk_documents(documents: list[dict]) -> list[dict]:
     for doc in documents:
         header_splits = markdown_splitter.split_text(doc["content"])
         patch_ver = doc["metadata"]["patch_version"]
+        doc_type = doc["metadata"].get("type", "legal")
 
         for header_doc in header_splits:
             base_meta = {
@@ -165,36 +166,63 @@ def chunk_documents(documents: list[dict]) -> list[dict]:
                 **header_doc.metadata
             }
 
+            h1 = str(base_meta.get("Header 1", "")).strip()
             h2 = str(base_meta.get("Header 2", "")).strip()
             h3 = str(base_meta.get("Header 3", "")).strip()
-
-            # Tạo nhãn ngữ cảnh tiêu chuẩn ở đầu chunk
-            if h3:
-                header_prefix = f"[Bản cập nhật {patch_ver} | Mục: {h2} | Tướng/Chủ đề: {h3}]\n"
-                champion = h3
-                section = h2
-            elif h2:
-                header_prefix = f"[Bản cập nhật {patch_ver} | Mục: {h2}]\n"
-                champion = ""
-                section = h2
-            else:
-                header_prefix = f"[Bản cập nhật {patch_ver}]\n"
-                champion = ""
-                section = ""
 
             page_content = header_doc.page_content.strip()
             if not page_content:
                 continue
 
-            full_text = header_prefix + page_content
+            if doc_type == "legal":
+                # Tạo nhãn ngữ cảnh cho tài liệu Legal (Patch Notes)
+                if h3:
+                    header_prefix = f"[Bản cập nhật {patch_ver} | Mục: {h2} | Tướng/Chủ đề: {h3}]\n"
+                    champion = h3
+                    section = h2
+                elif h2:
+                    header_prefix = f"[Bản cập nhật {patch_ver} | Mục: {h2}]\n"
+                    champion = ""
+                    section = h2
+                else:
+                    header_prefix = f"[Bản cập nhật {patch_ver}]\n"
+                    champion = ""
+                    section = ""
 
-            chunk_meta = {
-                "source": base_meta["source"],
-                "type": base_meta["type"],
-                "patch_version": patch_ver,
-                "section": section,
-                "champion": champion,
-            }
+                chunk_meta = {
+                    "source": base_meta["source"],
+                    "type": doc_type,
+                    "patch_version": patch_ver,
+                    "section": section,
+                    "champion": champion,
+                }
+
+            else:
+                # Tạo nhãn ngữ cảnh cho tài liệu News / Điều khoản / Chính sách
+                doc_title = h1 if h1 else base_meta["source"].replace(".md", "").replace("-", " ").title()
+                if h3:
+                    header_prefix = f"[Tài liệu: {doc_title} | Phần: {h2} | Mục: {h3}]\n"
+                    section = f"{h2} > {h3}"
+                elif h2:
+                    header_prefix = f"[Tài liệu: {doc_title} | Phần: {h2}]\n"
+                    section = h2
+                elif h1:
+                    header_prefix = f"[Tài liệu: {doc_title}]\n"
+                    section = h1
+                else:
+                    header_prefix = f"[Tài liệu: {doc_title}]\n"
+                    section = ""
+
+                chunk_meta = {
+                    "source": base_meta["source"],
+                    "type": doc_type,
+                    "patch_version": "N/A",
+                    "section": section,
+                    "champion": "",
+                    "title": doc_title,
+                }
+
+            full_text = header_prefix + page_content
 
             # Nếu độ dài văn bản của section quá lớn (> 3000 chars), mới dùng fallback splitter
             if len(full_text) > 3000:
