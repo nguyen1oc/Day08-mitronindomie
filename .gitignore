@@ -25,3 +25,5 @@ pageindex_pdfs/
 # OS
 .DS_Store
 Thumbs.db
+
+chroma_db
