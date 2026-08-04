@@ -1,17 +1,77 @@
 [
   {
-    "question": "Học phí hàng năm của chương trình Business tại RMIT Vietnam là bao nhiêu?",
-    "expected_answer": "Khoảng 375.840.000 VND mỗi năm (tùy chương trình cụ thể).",
-    "expected_context": "Trang Tuition Fees, mục Undergraduate Programs"
+    "question": "Vị tướng mới Locke, Kẻ Diệt Quỷ, ra mắt trong bản cập nhật nào và có những kỹ năng gì?",
+    "expected_answer": "Locke ra mắt trong bản cập nhật LMHT 26.13 ngày 24/06/2026. Bộ kỹ năng gồm Nội Tại (Cọc Bạc Trừ Tà - gây thêm sát thương phép theo Máu đã mất của địch), Q (Chú Đinh), W (Thiêu Hồn Huyết Tế), E (Xuyên Trận).",
+    "expected_context": "File Thông Tin Cập Nhật LMHT 26.13.md, mục TIÊU ĐIỂM CẬP NHẬT & LOCKE"
   },
   {
-    "question": "Học phí được thanh toán theo hình thức nào?",
-    "expected_answer": "Thanh toán theo từng học kỳ, tính theo từng môn học đã đăng ký.",
-    "expected_context": "Trang Tuition Fees, mục Payment Structure"
+    "question": "Chế độ Xếp Hạng 5v5 trở lại từ ngày nào và mở vào khoảng thời gian mấy giờ?",
+    "expected_answer": "Chế độ Xếp Hạng 5v5 chính thức trở lại từ ngày 26/06 và thời gian mở bắt đầu từ 20:00.",
+    "expected_context": "File Thông Tin Cập Nhật LMHT 26.13.md, mục XẾP HẠNG 5V5"
   },
   {
-    "question": "Trường có cung cấp ký túc xá trong khuôn viên không?",
-    "expected_answer": "Không — trường không cung cấp chỗ ở trong khuôn viên, nhưng có đội ngũ hỗ trợ sinh viên tìm chỗ ở gần trường.",
-    "expected_context": "Trang Accommodation Services"
+    "question": "Tính năng báo cáo tin nhắn trực tiếp mới trong bản 26.13 cho phép người chơi thực hiện những thao tác gì?",
+    "expected_answer": "Người chơi có thể báo cáo và/hoặc chặn người chơi khác trực tiếp từ giao diện trò chuyện (nút báo cáo ở tiêu đề khung chat hoặc nhấp chuột phải). Khi chặn, hai bên không thể nhắn tin nhưng lịch sử tin nhắn vẫn được giữ lại để kiểm duyệt.",
+    "expected_context": "File Thông Tin Cập Nhật LMHT 26.13.md, mục BÁO CÁO TIN NHẮN TRỰC TIẾP"
+  },
+  {
+    "question": "Những trang phục T1 nào được ra mắt trong bản cập nhật LMHT 26.14?",
+    "expected_answer": "Các trang phục gồm T1 Galio, T1 Xin Zhao, T1 Seraphine, T1 Ambessa, T1 Yunara và MVP T1 Miss Fortune, ra mắt ngày 16/07/2026.",
+    "expected_context": "File Patch 26.14 Notes.md, mục TIÊU ĐIỂM CẬP NHẬT"
+  },
+  {
+    "question": "Kỹ năng W (Trỗi Dậy!) của Azir được điều chỉnh như thế nào đối với các trang bị như Thiêu Rụi, Liandry, Đuốc Lửa Đen trong bản 26.14?",
+    "expected_answer": "Các hiệu ứng gây sát thương từ Thiêu Rụi, Mặt Nạ Đọa Đày Liandry, Đuốc Lửa Đen và Máy Chuyển Pha Hextech khi trúng đích giờ đây gây 100% sát thương thay vì 50% như trước.",
+    "expected_context": "File Patch 26.14 Notes.md, mục TƯỚNG Azir - W Trỗi Dậy!"
+  },
+  {
+    "question": "Kỹ năng R (Phân Chia Thiên Hạ) của Azir được thêm tương tác gì mới với quái rừng trong bản 26.14?",
+    "expected_answer": "Kỹ năng R (Phân Chia Thiên Hạ) của Azir giờ sẽ đẩy lùi được quái rừng.",
+    "expected_context": "File Patch 26.14 Notes.md, mục TƯỚNG Azir - R Phân Chia Thiên Hạ"
+  },
+  {
+    "question": "Bản cập nhật LMHT 26.12 tập trung chuẩn bị cho giải đấu nào và điều chỉnh tướng nào trong rừng?",
+    "expected_answer": "Bản 26.12 chuẩn bị cho giải đấu MSI, giảm sức mạnh Xin Zhao SMPT, tăng sức mạnh cho Yuumi và giảm bớt độ đáng sợ của Lee Sin và Nocturne trong rừng.",
+    "expected_context": "File Patch 26.12 Notes.md, mục Cập Nhật Trò Chơi"
+  },
+  {
+    "question": "Những trang phục Bội Ước và Cao Bồi nào được ra mắt ngày 24/06/2026?",
+    "expected_answer": "Jhin Bội Ước, Aurora Bội Ước, Shen Bội Ước, Akshan Cao Bồi và Locke Cao Bồi.",
+    "expected_context": "File Thông Tin Cập Nhật LMHT 26.13.md, mục TRANG PHỤC & ĐA SẮC MỚI"
+  },
+  {
+    "question": "Nhóm trang phục của đội vô địch Chung Kết MSI sẽ nhận được ưu đãi giảm giá bao nhiêu phần trăm sau khi giải đấu khép lại?",
+    "expected_answer": "Tất cả trang phục mua trực tiếp được đội vô địch Chung Kết MSI sử dụng sẽ được giảm giá 33% trong vòng một tuần sau khi loạt trận khép lại.",
+    "expected_context": "File Thông Tin Cập Nhật LMHT 26.13.md, mục TRANG PHỤC"
+  },
+  {
+    "question": "Người chơi nhận được những lợi ích gì khi liên kết tài khoản Riot và Discord?",
+    "expected_answer": "Có thể mời bạn bè Discord trực tiếp vào tổ đội, sao chép liên kết phòng chờ để chia sẻ với máy chủ Discord, hoặc xem bạn bè nào đang chơi để nhanh chóng vào phòng chờ cùng họ.",
+    "expected_context": "File Thông Tin Cập Nhật LMHT 26.13.md, mục TÍCH HỢP DISCORD"
+  },
+  {
+    "question": "Chỉ báo kết liễu lính được thêm vào những hàng chờ nào trong bản 26.13?",
+    "expected_answer": "Chỉ báo kết liễu lính (xe pháo) được đưa vào hàng chờ Xếp Hạng và Cấm Chọn Thường, người chơi có thể tắt tính năng này nếu thích.",
+    "expected_context": "File Thông Tin Cập Nhật LMHT 26.13.md, mục Cập Nhật Trò Chơi"
+  },
+  {
+    "question": "Trang phục Mordekaiser Sahn-Uzal sẽ trở lại Thánh Điện trong khoảng thời gian nào?",
+    "expected_answer": "Mordekaiser Sahn-Uzal sẽ trở lại Thánh Điện từ bản 26.13 cho đến hết bản 26.17.",
+    "expected_context": "File Thông Tin Cập Nhật LMHT 26.13.md, mục TRANG PHỤC"
+  },
+  {
+    "question": "Học phí chương trình cử nhân tại RMIT Vietnam năm nay là bao nhiêu?",
+    "expected_answer": "Thông tin này không có trong bộ dữ liệu cập nhật LMHT và tin tức Riot Games.",
+    "expected_context": "Out-of-Domain Query"
+  },
+  {
+    "question": "Thời tiết hôm nay ở thành phố Hồ Chí Minh thế nào?",
+    "expected_answer": "Thông tin này không có trong bộ dữ liệu cập nhật LMHT và tin tức Riot Games.",
+    "expected_context": "Out-of-Domain Query"
+  },
+  {
+    "question": "Hướng dẫn công thức nấu món phở bò truyền thống Việt Nam?",
+    "expected_answer": "Thông tin này không có trong bộ dữ liệu cập nhật LMHT và tin tức Riot Games.",
+    "expected_context": "Out-of-Domain Query"
   }
 ]
