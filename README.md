@@ -17,6 +17,13 @@ pinned: false
 
 ---
 
+## Thành viên
+>Phạm Văn Thắng - 2A202601359 - thangph18
+Nguyễn Anh Quân - 2A202601251 - QuanAnh280605
+Lê Bình nguyên - 2A202601659 - lbngyn
+Nguyễn Thiên Lộc - 2A202601479 - nguyen1oc - leader
+---
+
 ## Mục Tiêu
 
 Xây dựng một RAG pipeline thực tế, end-to-end, từ thu thập dữ liệu chính sách và thông tin dịch vụ đại học → xử lý → indexing → retrieval (hybrid + vectorless fallback) → generation có citation.
