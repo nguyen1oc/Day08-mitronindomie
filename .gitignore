@@ -25,3 +25,7 @@ pageindex_pdfs/
 # OS
 .DS_Store
 Thumbs.db
+
+#log
+streamlit.stderr.log
+streamlit.stdout.log
