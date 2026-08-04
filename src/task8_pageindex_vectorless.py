@@ -138,7 +138,7 @@ def upload_documents() -> list[dict]:
             else:
                 with pdf_path.open("rb") as file_obj:
                     response = requests.post(
-                        f"{PAGEINDEX_API_URL}/doc/",
+                        f"{PAGEINDEX_API_URL}/doc",
                         headers=_headers(),
                         files={"file": (pdf_path.name, file_obj, "application/pdf")},
                         timeout=120,
@@ -307,8 +307,19 @@ if __name__ == "__main__":
     if not PAGEINDEX_API_KEY:
         print("⚠ Hãy set PAGEINDEX_API_KEY trong file .env")
     else:
-        for result in pageindex_search(
-            "Tóm tắt những thay đổi quan trọng trong bản cập nhật game",
-            top_k=3,
-        ):
-            print(f"[{result['score']:.3f}] {result['content'][:100]}...")
+        print("[+] Starting upload and processing to PageIndex...")
+        try:
+            uploaded = upload_documents()
+            print(f"[+] Successfully uploaded and processed {len(uploaded)} documents.")
+        except Exception as e:
+            print(f"[-] Upload error: {e}")
+        
+        print("\n[+] Testing PageIndex search:")
+        try:
+            for result in pageindex_search(
+                "Tóm tắt những thay đổi quan trọng trong bản cập nhật game",
+                top_k=3,
+            ):
+                print(f"  [{result['score']:.3f}] {result['content'][:100]}...")
+        except Exception as e:
+            print(f"[-] Search error: {e}")

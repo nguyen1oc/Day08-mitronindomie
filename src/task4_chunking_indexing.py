@@ -32,6 +32,9 @@ trong cùng collection, retrieval sẽ trả về kết quả rác từ dữ li�
 
 import re
 from pathlib import Path
+from dotenv import load_dotenv
+
+load_dotenv()
 
 STANDARDIZED_DIR = Path(__file__).parent.parent / "data" / "standardized"
 CHROMA_DIR = Path(__file__).parent.parent / "chroma_db"
@@ -47,9 +50,9 @@ CHUNK_SIZE = 1500        # Ngưỡng kích thước tối đa dành cho fallback
 CHUNK_OVERLAP = 150      # Độ đè lấp giữa các sub-chunk nếu phải cắt
 CHUNKING_METHOD = "markdown_header"  # "recursive" | "markdown_header" | "semantic"
 
-# Embedding Model: BAAI/bge-m3 (1024 dim, multilingual, tốt cho tiếng Việt và tiếng Anh)
-EMBEDDING_MODEL = "BAAI/bge-m3"
-EMBEDDING_DIM = 1024
+# Embedding Model: nvidia/llama-nemotron-embed-vl-1b-v2:free qua OpenRouter
+EMBEDDING_MODEL = "nvidia/llama-nemotron-embed-vl-1b-v2:free"
+EMBEDDING_DIM = 2048
 
 # Vector Store: ChromaDB
 VECTOR_STORE = "chromadb"
@@ -77,13 +80,53 @@ def extract_patch_version(filename: str, content: str = "") -> str:
     return "unknown"
 
 
+class OpenRouterEmbeddingModel:
+    def __init__(self, model_name="openai/text-embedding-3-small"):
+        self.model_name = model_name
+        import os
+        from openai import OpenAI
+        api_key = os.getenv("OPENROUTER_API_KEY")
+        if not api_key:
+            raise ValueError(
+                "OPENROUTER_API_KEY is not set in environment variables! "
+                "Please configure it in your .env file."
+            )
+        self.client = OpenAI(
+            api_key=api_key,
+            base_url="https://openrouter.ai/api/v1",
+        )
+
+    def encode(self, texts, show_progress_bar=False):
+        input_is_string = isinstance(texts, str)
+        if input_is_string:
+            texts = [texts]
+        
+        import numpy as np
+        
+        # Batch size for embeddings to avoid token limits
+        batch_size = 100
+        all_embeddings = []
+        for i in range(0, len(texts), batch_size):
+            batch = texts[i:i+batch_size]
+            response = self.client.embeddings.create(
+                model=self.model_name,
+                input=batch,
+                encoding_format="float"
+            )
+            batch_embeddings = [item.embedding for item in response.data]
+            all_embeddings.extend(batch_embeddings)
+            
+        embeddings = np.array(all_embeddings)
+        if input_is_string:
+            return embeddings[0]
+        return embeddings
+
+
 def get_embedding_model():
-    """Lazy load embedding model bằng SentenceTransformer."""
+    """Lazy load embedding model bằng OpenRouter."""
     global _EMBEDDING_MODEL_CACHE
     if _EMBEDDING_MODEL_CACHE is None:
-        from sentence_transformers import SentenceTransformer
-        _EMBEDDING_MODEL_CACHE = SentenceTransformer(EMBEDDING_MODEL)
-        _EMBEDDING_MODEL_CACHE.max_seq_length = 512
+        _EMBEDDING_MODEL_CACHE = OpenRouterEmbeddingModel(EMBEDDING_MODEL)
     return _EMBEDDING_MODEL_CACHE
 
 
